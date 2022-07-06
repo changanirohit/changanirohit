@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="Untitled-1.css">
+</head>
+
+<body>
+      <div class="container">
+        <div class="header">
+            <h2>REGISTRATION FORM</h2>
+        </div>
+        <form method="post" class="form" id="form">
+            <div class="form-control">
+                <label>Username</label>
+                <input type="text" name="" id="username" placeholder="Enter your fullname" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Msg</small>
+            </div>
+            <div class="form-control">
+                <label>Email</label>
+                <input type="Email" name="" id="email" placeholder="Enter your Email" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Msg</small>
+            </div>
+            <div class="form-control">
+                <label>Phone Number</label>
+                <input type="tel" onkeypress="return (event.which >= 48 && event.which <= 57)"
+                minlength="5" maxlength="10" name="" id="Phone"
+                     placeholder="Enter your Phone Number" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Msg</small>
+            </div>
+            <div class="form-control">
+                <label>Password</label>
+                <input type="Password" name="" id="Password" placeholder="Enter your Password" autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Msg</small>
+            </div>
+            <div class="form-control">
+                <label>Confirm Password</label>
+                <input type="Password" name="" id="cPassword" placeholder="Enter your Password again"
+                autocomplete="off">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Msg</small>
+            </div>
+            <input type="submit" value="submit" class="btn" name="">
+        </form>
+    </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+    // Get the video
+var video = document.getElementById("myVideo");
+
+// Pause and play the video, and change the button text
+function myFunction() {
+  if (video.paused) {
+    video.play();
+    btn.innerHTML = "Pause";
+  } else {
+    video.pause();
+    btn.innerHTML = "Play";
+  }
+}
+
+        const form = document.getElementById('form');
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const Phone = document.getElementById('Phone');
+        const Password = document.getElementById('Password');
+        const cPassword = document.getElementById('cPassword');
+
+        // add event
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            validate();
+        })
+        const sedData = ( sRate, count) => {
+            if(sRate === count){
+                swal("Welcome!", "Registration successful", "success").then(function(){
+                    location.reload();
+                })
+            }
+        }
+
+        // for final data validation
+        const successMsg = () => {
+            let formCon = document.getElementsByClassName('form-control');
+        var count = formCon.length - 1;
+        for (var i = 0; i < formCon.length; i++) {
+          if (formCon[i].className === "form-control success") {
+          var sRate = 0 + i;
+          console.log(sRate);
+         sedData( sRate, count);
+         } else {
+           return false;
+        }
+     }
+  }
+
+        // more email validate
+        const isEmail = (emailVal) => {
+            var atsymbol = emailVal.split("@");
+            if (atsymbol < 1) return false;
+            var dot = emailVal.split('.');
+            if (dot <= atsymbol + 3) return false;
+            if (dot === emailVal.length - 1) return false;
+            return true;
+        }
+        // defainr the validate function
+
+        const validate = () => {
+            const usernameVal = username.value.trim();
+            const emailVal = email.value.trim();
+            const PhoneVal = Phone.value.trim();
+            const PasswordVal = Password.value.trim();
+            const cPasswordVal = cPassword.value.trim();
+
+            //validate username
+            if (usernameVal === "") {
+                setErrorMsg(username, 'Username cannot be blank');
+            } else if (usernameVal.length <= 4) {
+                setErrorMsg(username, 'username min 5 char');
+            } else {
+                setSuccessMsg(username);
+            }
+            //validate email
+            if (emailVal === "") {
+                setErrorMsg(email, 'Email cannot be blank');
+            } else if (!isEmail(emailVal)) {
+                setErrorMsg(emailVal, 'Not a valid Email');
+            } else {
+                setSuccessMsg(email);
+            }
+            
+            //validate phone
+            if (PhoneVal === "") {
+                setErrorMsg(Phone, 'phone cannot be blank');
+            } else if (PhoneVal.length != 10) {
+                setErrorMsg(PhoneVal, 'Not a valid phone num');
+            } else {
+                setSuccessMsg(Phone);
+            }
+            //validate password
+            if (PasswordVal === "") {
+                setErrorMsg(Password, 'Password cannot be blank');
+            } else if (PasswordVal.length <= 5) {
+                setErrorMsg(Password, 'minimum 6 char');
+            } else {
+                setSuccessMsg(Password);
+            }
+            //validate cpassword
+            if (cPasswordVal === "") {
+                setErrorMsg(cPassword, 'confirm Password cannot be blank');
+            } else if (PasswordVal != cPasswordVal) {
+                setErrorMsg(cPassword, 'password are not matching');
+            } else {
+                setSuccessMsg(cPassword);
+            }
+            successMsg();
+
+        };
+        function setErrorMsg(input, errormsgs) {
+            const formControl = input.parentElement;
+            const small = formControl.querySelector('small');
+            formControl.className = "form-control error";
+            small.innerText = errormsgs;
+        }
+        function setSuccessMsg(input) {
+            const formControl = input.parentElement;
+            formControl.className = "form-control success";
+        }
+
+    </script>
+</body>
+
+</html>
